@@ -20,7 +20,8 @@ Use LSD for the everyday stuff: a new page, a form, a component, a small API end
 
 **Via Claude plugin manager:**
 ```bash
-claude plugin install https://github.com/C0nanT/lsd-plugin
+claude plugin marketplace add https://github.com/C0nanT/lsd-plugin
+claude plugin install lsd@C0nanT-plugins
 ```
 
 **Via git clone:**
