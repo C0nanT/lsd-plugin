@@ -1,48 +1,6 @@
 # LSD — Little Shit Done
 
-Lightweight feature planner and executor for Claude Code. Breaks features into 1-3 phases with isolated agent execution. Token-efficient: each step runs in a fresh context, communicating only through markdown files in `.task/`.
-
-## Install
-
-**Via Claude plugin manager (recomendado):**
-```bash
-claude plugin install https://github.com/C0nanT/lsd-plugin
-```
-
-**Via git clone (manual):**
-```bash
-git clone https://github.com/C0nanT/lsd-plugin
-cp -r lsd-plugin/skills/lsd ~/.claude/skills/lsd
-```
-
-## Usage
-
-```
-/lsd [description]   # Gather requirements → writes .task/BRIEF.md
-/lsd plan            # Create execution plan → writes .task/PLAN.md
-/lsd exec <N>        # Execute phase N → writes .task/PHASE-N.md
-/lsd verify          # Verify all phases → writes .task/VERIFY.md
-/lsd clean           # Delete .task/ directory
-```
-
-### Typical workflow
-
-```
-/lsd add dark mode to the settings page
-# answer a few questions
-# /clear
-/lsd plan
-# review .task/PLAN.md, edit if needed
-# /clear
-/lsd exec 1
-# review code changes
-# /clear
-/lsd verify
-# /clear
-/lsd clean
-```
-
-Each `/clear` between steps keeps context lean — the `.task/` directory is the only shared memory between steps.
+> Lightweight Spec-Driven Development for Claude Code. Plan small, execute in isolation, ship fast.
 
 ## Why
 
@@ -55,6 +13,58 @@ On Claude Code's Pro plan, GSD can burn through your tokens before finishing a t
 Use LSD for the everyday stuff: a new page, a form, a component, a small API endpoint. Use GSD when the task actually deserves a bazooka.
 
 > LSD is under active development. Planned improvements include parallelism in some phases — without significantly increasing token usage.
+
+---
+
+## Install
+
+**Via Claude plugin manager:**
+```bash
+claude plugin install https://github.com/C0nanT/lsd-plugin
+```
+
+**Via git clone:**
+```bash
+git clone https://github.com/C0nanT/lsd-plugin
+cp -r lsd-plugin/skills/lsd ~/.claude/skills/lsd
+```
+
+---
+
+## Usage
+
+| Command | What it does | Output |
+|---------|-------------|--------|
+| `/lsd [description]` | Gather requirements | `.task/BRIEF.md` |
+| `/lsd plan` | Create execution plan | `.task/PLAN.md` |
+| `/lsd exec <N>` | Execute phase N | `.task/PHASE-N.md` |
+| `/lsd verify` | Verify all phases | `.task/VERIFY.md` |
+| `/lsd clean` | Delete `.task/` | — |
+
+### Workflow
+
+```
+/lsd add dark mode to the settings page
+# answer a few questions → BRIEF.md is saved
+# /clear
+
+/lsd plan
+# review .task/PLAN.md, edit if needed
+# /clear
+
+/lsd exec 1
+# review code changes
+# /clear
+
+/lsd verify
+# /clear
+
+/lsd clean
+```
+
+Each `/clear` between steps keeps context lean — `.task/` is the only shared memory between steps.
+
+---
 
 ## Structure
 
