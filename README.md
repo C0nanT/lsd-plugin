@@ -46,7 +46,15 @@ Each `/clear` between steps keeps context lean — the `.task/` directory is the
 
 ## Why
 
-Most tasks don't need a full GSD pipeline. LSD is for the small stuff: a new page, a form, a component, a small API endpoint. Plan once, execute in isolation, verify, done.
+If you use [GSD (Get Shit Done)](https://github.com/mozartelio/gsd), you know it's a bazooka. Great for killing the main villain — but sometimes you just need to kill an ant.
+
+GSD is the Hulk: solves anything by brute force, doesn't care about the cost, laser-focused on the big problem. LSD is Hawkeye: small, fast, plans well, optimized, and perfect for taking out the minor enemies without blowing up the budget.
+
+On Claude Code's Pro plan, GSD can burn through your tokens before finishing a task. LSD was built to solve that — same **Spec-Driven Development** discipline (BRIEF → PLAN → EXEC → VERIFY), but every step runs in a fresh context and only passes what's strictly necessary forward through `.task/` markdown files.
+
+Use LSD for the everyday stuff: a new page, a form, a component, a small API endpoint. Use GSD when the task actually deserves a bazooka.
+
+> LSD is under active development. Planned improvements include parallelism in some phases — without significantly increasing token usage.
 
 ## Structure
 
