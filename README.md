@@ -79,13 +79,6 @@ ln -s $(pwd)/lsd-plugin/skills/lsd ~/.claude/skills/lsd
 
 Edit the files in `skills/lsd/`, test with `/lsd` in Claude Code, then open a PR.
 
-To publish your own fork as a plugin, push and run:
-
-```bash
-claude plugin marketplace add https://github.com/YOUR_USERNAME/lsd-plugin
-claude plugin install lsd@YOUR_USERNAME-plugins
-```
-
 ---
 
 ## Structure
