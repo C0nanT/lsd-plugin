@@ -4,7 +4,7 @@
 
 ## Why
 
-If you use [GSD (Get Shit Done)](https://github.com/mozartelio/gsd), you know it's a bazooka. Great for killing the main villain — but sometimes you just need to kill an ant.
+If you use [GSD (Get Shit Done)](https://github.com/gsd-build/get-shit-done), you know it's a bazooka. Great for killing the main villain — but sometimes you just need to kill an ant.
 
 GSD is the Hulk: solves anything by brute force, doesn't care about the cost, laser-focused on the big problem. LSD is Hawkeye: small, fast, plans well, optimized, and perfect for taking out the minor enemies without blowing up the budget.
 
