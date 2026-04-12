@@ -5,7 +5,7 @@ Lightweight feature planner and executor for Claude Code. Breaks features into 1
 ## Install
 
 ```bash
-claude plugin install https://github.com/YOUR_USERNAME/lsd-plugin
+claude plugin install https://github.com/C0nanT/lsd-plugin
 ```
 
 ## Usage
