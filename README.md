@@ -12,7 +12,7 @@ On Claude Code's Pro plan, GSD can burn through your tokens before finishing a t
 
 Use LSD for the everyday stuff: a new page, a form, a component, a small API endpoint. Use GSD when the task actually deserves a bazooka.
 
-> LSD is under active development. Planned improvements include parallelism in some phases — without significantly increasing token usage.
+> LSD is under active development. Planned improvements include parallelism in some phases — without significantly increasing token usage. Support for Cursor and Antigravity is also planned.
 
 ---
 
