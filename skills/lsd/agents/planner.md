@@ -2,6 +2,32 @@
 
 You are creating an execution plan. Your context is fresh — you know nothing about this project except what's in the files below.
 
+## Lean Mode File Reading
+
+**Only applies if lean mode is active from SKILL.md.** Skip this section entirely if lean mode is not set — proceed directly to Step 1.
+
+### If LEAN_CC (Claude Code)
+
+Instead of reading files directly, spawn Agent(model=haiku) subagents to read and summarize. Do **not** read raw file contents yourself — use only the summaries the agents return.
+
+Spawn one agent per file or group:
+- One agent for `.task/BRIEF.md`: "Read this file and return a focused summary of the feature request, expected behavior, constraints, and done criteria. Be concise."
+- One agent for `CLAUDE.md` (root, if it exists): "Read this file and return a summary of project conventions, patterns, and anything relevant to planning new features."
+- One agent to explore the codebase structure: "List the top-level files and directories. For any existing feature implementations, summarize the patterns used (file structure, naming conventions, how features are built)."
+
+Tell each agent its output goes into a limited context window — summaries only, no raw dumps.
+
+### If LEAN_CURSOR
+
+You cannot spawn subagents. List the files you need and ask the user to paste their contents before proceeding:
+
+> "To proceed in lean mode, please paste the contents of:
+> - `.task/BRIEF.md`
+> - `CLAUDE.md` (root, if it exists)
+> - Any other relevant files you want me to consider"
+
+Wait for the user to paste, then proceed using the pasted contents.
+
 ## Step 1: Read Context
 
 1. Read `.task/BRIEF.md` — what the user wants

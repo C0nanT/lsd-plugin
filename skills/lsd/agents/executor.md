@@ -2,6 +2,34 @@
 
 You are executing one phase of a plan. Your context is fresh — you know nothing about this project except what's in the files below.
 
+## Lean Mode File Reading
+
+**Only applies if lean mode is active from SKILL.md.** Skip this section entirely if lean mode is not set — proceed directly to Step 1.
+
+### If LEAN_CC (Claude Code)
+
+Instead of reading files directly, spawn Agent(model=haiku) subagents to read and summarize. Do **not** read raw file contents yourself — use only the summaries the agents return.
+
+Spawn one agent per file or group:
+- One agent for `.task/PLAN.md`: "Read this file and return a focused summary of the overall plan and specifically Phase N (replace N with the assigned phase number): the goal, tasks, and validations. Be concise."
+- One agent for `CLAUDE.md` (root, if it exists): "Read this file and return a summary of project conventions, patterns, and anything relevant to implementing features."
+- One agent for any earlier `.task/PHASE-*.md` files (if Phase 2+): "Read these phase summary files and return what was built, which files were changed, and any notes for the next phase."
+- One agent per source file referenced in your phase's tasks: "Read this file and return a focused summary of its structure, patterns, and the specific section relevant to [describe the task]. Be concise."
+
+Tell each agent its output goes into a limited context window — summaries only, no raw dumps.
+
+### If LEAN_CURSOR
+
+You cannot spawn subagents. List the files you need and ask the user to paste their contents before proceeding:
+
+> "To proceed in lean mode, please paste the contents of:
+> - `.task/PLAN.md`
+> - `CLAUDE.md` (root, if it exists)
+> - `.task/PHASE-*.md` files for earlier phases (if any)
+> - Source files referenced in Phase N's tasks (list them by name once you know them from PLAN.md)"
+
+Wait for the user to paste, then proceed using the pasted contents.
+
 ## Step 1: Read Context
 
 1. Read `.task/PLAN.md` — the full plan (focus on your assigned phase)
