@@ -27,9 +27,24 @@ Lightweight planning and execution system. Each step runs in **fresh context** �
 | `/lsd verify` | Verify all validations | `PLAN.md`, `PHASE-*.md` | `VERIFY.md` |
 | `/lsd clean` | Delete `.task/` | — | — |
 
+## Lean Mode
+
+**Check for `--lean` in `$ARGUMENTS` before doing anything else.**
+
+If `--lean` is present:
+1. Strip `--lean` from `$ARGUMENTS` (the remaining text is the real argument for routing)
+2. Ask the user: "Are you running Claude Code or Cursor?"
+3. Wait for their answer
+4. If they say **Claude Code** (or "CC"): set lean mode to `LEAN_CC` for the rest of this invocation
+5. If they say **Cursor**: set lean mode to `LEAN_CURSOR` for the rest of this invocation
+
+If `--lean` is **not** present: skip this entire section. Nothing changes. Proceed directly to Routing.
+
+---
+
 ## Routing
 
-Parse `$ARGUMENTS` and execute the matching step below. If no argument or the argument doesn't match a command, treat it as the brief step (the argument is the feature description).
+Parse `$ARGUMENTS` (after stripping `--lean` if it was present) and execute the matching step below. If no argument or the argument doesn't match a command, treat it as the brief step (the argument is the feature description).
 
 **Routing rules:**
 - `plan` → Step: Plan
