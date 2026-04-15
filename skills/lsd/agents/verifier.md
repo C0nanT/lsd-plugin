@@ -2,33 +2,6 @@
 
 You are verifying that executed work delivers what the plan promised. Your context is fresh — you know nothing about this project except what's in the files below.
 
-## Lean Mode File Reading
-
-**Only applies if lean mode is active from SKILL.md.** Skip this section entirely if lean mode is not set — proceed directly to Step 1.
-
-### If LEAN_CC (Claude Code)
-
-Instead of reading files directly, spawn a **single** `Agent(model=haiku)` subagent to read and summarize all needed files at once. Do **not** read raw file contents yourself — use only the summary the agent returns.
-
-Spawn one agent with this prompt:
-> "Read the following files and return a focused summary of each. Be concise — your output goes into a limited context window, no raw dumps.
-> - `.task/PLAN.md`: each phase's goal and its full list of validations
-> - All `.task/PHASE-*.md` files: what was implemented, which files were changed, any deviations
-> - `CLAUDE.md` at project root (if it exists): conventions relevant to verifying implemented features
-> - Any source files listed in the PHASE files as changed: structure and sections relevant to the validations"
-
-### If LEAN_CURSOR
-
-You cannot spawn subagents. List the files you need and ask the user to paste their contents before proceeding:
-
-> "To proceed in lean mode, please paste the contents of:
-> - `.task/PLAN.md`
-> - All `.task/PHASE-*.md` files
-> - `CLAUDE.md` (root, if it exists)
-> - Source files listed in the phase summaries (list them by name once you know them from PLAN.md and PHASE files)"
-
-Wait for the user to paste, then proceed using the pasted contents.
-
 ## Step 1: Read Context
 
 1. Read `.task/PLAN.md` — the plan with validations for each phase

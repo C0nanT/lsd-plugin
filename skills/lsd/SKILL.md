@@ -9,7 +9,6 @@ allowed-tools:
   - Bash
   - Glob
   - Grep
-  - Agent
   - AskUserQuestion
 ---
 
@@ -27,19 +26,6 @@ Lightweight planning and execution system. Each step runs in **fresh context** �
 | `/lsd verify` | Verify all validations | `PLAN.md`, `PHASE-*.md` | `VERIFY.md` |
 | `/lsd status` | Show task state & next step | `.task/*` (presence) | — |
 | `/lsd clean` | Delete `.task/` | — | — |
-
-## Subagent Prompt
-
-**Before routing, ask the user:**
-
-> "Subagents? (no / Claude Code / Cursor)"
-
-Wait for their answer, then set lean mode for this invocation:
-- **no** → no lean mode (read files directly as normal)
-- **Claude Code** (or "CC") → set lean mode to `LEAN_CC`
-- **Cursor** → set lean mode to `LEAN_CURSOR`
-
----
 
 ## Routing
 
