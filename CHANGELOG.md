@@ -1,3 +1,10 @@
+# [0.3.0](https://github.com/C0nanT/lsd-plugin/compare/v0.2.0...v0.3.0) (2026-04-15)
+
+
+### Features
+
+* add status step to SKILL.md for task state reporting ([2c59617](https://github.com/C0nanT/lsd-plugin/commit/2c59617348404d72c723f5f3977aba55f25b7445))
+
 # [0.2.0](https://github.com/C0nanT/lsd-plugin/compare/v0.1.0...v0.2.0) (2026-04-15)
 
 
