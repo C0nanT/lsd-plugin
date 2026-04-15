@@ -1,3 +1,10 @@
+## [0.3.1](https://github.com/C0nanT/lsd-plugin/compare/v0.3.0...v0.3.1) (2026-04-15)
+
+
+### Bug Fixes
+
+* remove lean mode file reading sections from agents and SKILL.md ([77f3a68](https://github.com/C0nanT/lsd-plugin/commit/77f3a684ca12b74c7056279490e55eab7bc80410))
+
 # [0.3.0](https://github.com/C0nanT/lsd-plugin/compare/v0.2.0...v0.3.0) (2026-04-15)
 
 
