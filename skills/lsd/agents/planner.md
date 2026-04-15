@@ -8,14 +8,13 @@ You are creating an execution plan. Your context is fresh — you know nothing a
 
 ### If LEAN_CC (Claude Code)
 
-Instead of reading files directly, spawn Agent(model=haiku) subagents to read and summarize. Do **not** read raw file contents yourself — use only the summaries the agents return.
+Instead of reading files directly, spawn a **single** `Agent(model=haiku)` subagent to read and summarize all needed files at once. Do **not** read raw file contents yourself — use only the summary the agent returns.
 
-Spawn one agent per file or group:
-- One agent for `.task/BRIEF.md`: "Read this file and return a focused summary of the feature request, expected behavior, constraints, and done criteria. Be concise."
-- One agent for `CLAUDE.md` (root, if it exists): "Read this file and return a summary of project conventions, patterns, and anything relevant to planning new features."
-- One agent to explore the codebase structure: "List the top-level files and directories. For any existing feature implementations, summarize the patterns used (file structure, naming conventions, how features are built)."
-
-Tell each agent its output goes into a limited context window — summaries only, no raw dumps.
+Spawn one agent with this prompt:
+> "Read the following files and return a focused summary of each. Be concise — your output goes into a limited context window, no raw dumps.
+> - `.task/BRIEF.md`: feature request, expected behavior, constraints, and done criteria
+> - `CLAUDE.md` at project root (if it exists): project conventions, patterns, and anything relevant to planning new features
+> - Top-level file and directory listing: summarize the structure and any patterns used in existing feature implementations (file structure, naming conventions, how features are built)"
 
 ### If LEAN_CURSOR
 

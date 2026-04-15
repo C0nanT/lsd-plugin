@@ -8,15 +8,14 @@ You are executing one phase of a plan. Your context is fresh — you know nothin
 
 ### If LEAN_CC (Claude Code)
 
-Instead of reading files directly, spawn Agent(model=haiku) subagents to read and summarize. Do **not** read raw file contents yourself — use only the summaries the agents return.
+Instead of reading files directly, spawn a **single** `Agent(model=haiku)` subagent to read and summarize all needed files at once. Do **not** read raw file contents yourself — use only the summary the agent returns.
 
-Spawn one agent per file or group:
-- One agent for `.task/PLAN.md`: "Read this file and return a focused summary of the overall plan and specifically Phase N (replace N with the assigned phase number): the goal, tasks, and validations. Be concise."
-- One agent for `CLAUDE.md` (root, if it exists): "Read this file and return a summary of project conventions, patterns, and anything relevant to implementing features."
-- One agent for any earlier `.task/PHASE-*.md` files (if Phase 2+): "Read these phase summary files and return what was built, which files were changed, and any notes for the next phase."
-- One agent per source file referenced in your phase's tasks: "Read this file and return a focused summary of its structure, patterns, and the specific section relevant to [describe the task]. Be concise."
-
-Tell each agent its output goes into a limited context window — summaries only, no raw dumps.
+Spawn one agent with this prompt:
+> "Read the following files and return a focused summary of each. Be concise — your output goes into a limited context window, no raw dumps.
+> - `.task/PLAN.md`: overall plan summary and specifically Phase N (replace N with the assigned phase number) — goal, tasks, and validations
+> - `CLAUDE.md` at project root (if it exists): project conventions, patterns, and anything relevant to implementing features
+> - All `.task/PHASE-*.md` files for phases before N (if any): what was built, which files were changed, and any notes for the next phase
+> - Source files referenced in Phase N's tasks: structure, patterns, and sections relevant to the tasks"
 
 ### If LEAN_CURSOR
 

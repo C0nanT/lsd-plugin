@@ -8,15 +8,14 @@ You are verifying that executed work delivers what the plan promised. Your conte
 
 ### If LEAN_CC (Claude Code)
 
-Instead of reading files directly, spawn Agent(model=haiku) subagents to read and summarize. Do **not** read raw file contents yourself — use only the summaries the agents return.
+Instead of reading files directly, spawn a **single** `Agent(model=haiku)` subagent to read and summarize all needed files at once. Do **not** read raw file contents yourself — use only the summary the agent returns.
 
-Spawn one agent per file or group:
-- One agent for `.task/PLAN.md`: "Read this file and return a focused summary of each phase's goal and its full list of validations. Be concise."
-- One agent for all `.task/PHASE-*.md` files: "Read these phase summary files and return: what was implemented, which files were changed, and any deviations from the plan."
-- One agent for `CLAUDE.md` (root, if it exists): "Read this file and return a summary of project conventions relevant to verifying implemented features."
-- One agent per source file listed in the phase summaries: "Read this file and return a focused summary of its structure and the specific sections relevant to [describe what was implemented]. Be concise."
-
-Tell each agent its output goes into a limited context window — summaries only, no raw dumps.
+Spawn one agent with this prompt:
+> "Read the following files and return a focused summary of each. Be concise — your output goes into a limited context window, no raw dumps.
+> - `.task/PLAN.md`: each phase's goal and its full list of validations
+> - All `.task/PHASE-*.md` files: what was implemented, which files were changed, any deviations
+> - `CLAUDE.md` at project root (if it exists): conventions relevant to verifying implemented features
+> - Any source files listed in the PHASE files as changed: structure and sections relevant to the validations"
 
 ### If LEAN_CURSOR
 
