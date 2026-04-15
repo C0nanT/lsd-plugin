@@ -1,7 +1,7 @@
 ---
 name: lsd
 description: "Little Shit Done — lightweight feature planner and executor. Breaks features into 1-3 phases with isolated agent execution. Token-efficient: each step runs in fresh context, communicating only through markdown files. Only triggers when explicitly invoked via /lsd."
-argument-hint: "<brief|plan|exec N|verify|clean> [description]"
+argument-hint: "<brief|plan|exec N|verify|status|clean> [description]"
 allowed-tools:
   - Read
   - Write
@@ -25,31 +25,31 @@ Lightweight planning and execution system. Each step runs in **fresh context** �
 | `/lsd plan` | Create execution plan | `BRIEF.md` | `PLAN.md` |
 | `/lsd exec <N>` | Execute phase N | `PLAN.md`, `PHASE-*.md` | `PHASE-N.md` |
 | `/lsd verify` | Verify all validations | `PLAN.md`, `PHASE-*.md` | `VERIFY.md` |
+| `/lsd status` | Show task state & next step | `.task/*` (presence) | — |
 | `/lsd clean` | Delete `.task/` | — | — |
 
-## Lean Mode
+## Subagent Prompt
 
-**Check for `--lean` in `$ARGUMENTS` before doing anything else.**
+**Before routing, ask the user:**
 
-If `--lean` is present:
-1. Strip `--lean` from `$ARGUMENTS` (the remaining text is the real argument for routing)
-2. Ask the user: "Are you running Claude Code or Cursor?"
-3. Wait for their answer
-4. If they say **Claude Code** (or "CC"): set lean mode to `LEAN_CC` for the rest of this invocation
-5. If they say **Cursor**: set lean mode to `LEAN_CURSOR` for the rest of this invocation
+> "Subagents? (no / Claude Code / Cursor)"
 
-If `--lean` is **not** present: skip this entire section. Nothing changes. Proceed directly to Routing.
+Wait for their answer, then set lean mode for this invocation:
+- **no** → no lean mode (read files directly as normal)
+- **Claude Code** (or "CC") → set lean mode to `LEAN_CC`
+- **Cursor** → set lean mode to `LEAN_CURSOR`
 
 ---
 
 ## Routing
 
-Parse `$ARGUMENTS` (after stripping `--lean` if it was present) and execute the matching step below. If no argument or the argument doesn't match a command, treat it as the brief step (the argument is the feature description).
+Parse `$ARGUMENTS` and execute the matching step below. If no argument or the argument doesn't match a command, treat it as the brief step (the argument is the feature description).
 
 **Routing rules:**
 - `plan` → Step: Plan
 - `exec <N>` or `exec` → Step: Execute (N required, prompt if missing)
 - `verify` → Step: Verify
+- `status` → Step: Status
 - `clean` → Step: Clean
 - Anything else (or empty) → Step: Brief (treat argument as feature description)
 
@@ -131,6 +131,27 @@ Verification saved to .task/VERIFY.md
 If all passed: /clear and run /lsd clean
 If failures: fix manually or re-run /lsd exec <N> for the failing phase
 ```
+
+---
+
+## Step: Status
+
+Check which of these files exist in `.task/` (presence only — do **not** read their contents):
+- `BRIEF.md`
+- `PLAN.md`
+- `PHASE-*.md` (note which numbers)
+- `VERIFY.md`
+
+Print a compact summary (~10-15 lines), then infer and suggest the next command:
+
+| State | Next command |
+|-------|-------------|
+| No files | `/lsd <description>` |
+| BRIEF only | `/lsd plan` |
+| PLAN, no PHASE-1 | `/lsd exec 1` |
+| PHASE-N exists, no PHASE-N+1 (more phases remain per PLAN.md) | `/lsd exec N+1` |
+| All phases done, no VERIFY | `/lsd verify` |
+| VERIFY exists | `/lsd clean` |
 
 ---
 
